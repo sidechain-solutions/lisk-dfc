@@ -6,7 +6,7 @@
 - Ensures that you don't miss a block
 - Mitigates the chance of having multiple forging services active at the same time
 - Auto-corrects potential issues
-- Alerts via email
+- Sends alerts via email
 - Comes with an additional toolset for manual toggling and verification
 
 _DISCLAIMER: No warranty or guarantee of any kind is provided. Please use at your own risk. Even though a lot measures have been taken to make LDFC as secure as possible, it is impossible to rule out **all** possible (split brain) scenarios. Therefore, as a node operator, it is important to stay diligent and to always keep a close eye on your setup._
@@ -116,10 +116,14 @@ nano config/config.json
     "https://node3.domain.com",
     "https://node4.domain.com"
   ],
+  "useExternalForgerList": false,
+  "forgersListPath": "",
+  "forgersListUrl": "",
   "shuffleInterval": 10,
   "minimumQueue": 33,
-  "minimumConsensus": 67,
+  "minimumConsensus": 51,
   "maxRetries": 5,
+  "timeout": 1500,
   "useMailer": true
 }
 ```
@@ -128,9 +132,17 @@ nano config/config.json
 `password`: The password that you used to encrypt your passphrase  
 `apis`: An array of available APIs that the script will use to get certain data  
 `forgers`: An array of nodes that will be used to forge blocks  
+`useExternalForgerList`: Set this option to 'true' to use an external list of forgers instead of the list in the config.
+
+> LDFC supports `JSON` files with the following format: `["http://forger1:7000", "http://forger2:7000", "http://forger3:7000"]`. When enabled, either `forgersListPath` OR
+
+`forgersListUrl` is required  
+`forgersListPath`: The path where the list of forgers is stored  
+`forgersListUrl`: The URL where the list of forgers is stored. Should be hosted statically  
 `shuffleInterval`: The amount of time (in minutes) between each node shuffle  
 `minimumQueue`: Determines the minimum position in the forging queue to before performe a shuffle  
 `maxRetries`: The amount of attempts before returning an error. Used for re-enabling forging and polling the status of nodes
+`timeout`: The number of miliseconds before a request times out (default: 1500). Lower this number if you are using excessive amount of nodes to avoid the execution time of the script exceeding the cron job interval  
 `useMailer`: Enable or disable mailing functionality. When enabled, LDFC will send warning and alert mails where applicable
 
 Do not forget to add the protocol prefix (`http://` or `https://`) as well as the port number (where applicable) for the APIs and forgers!
