@@ -1,0 +1,19 @@
+{
+  "name": "lisk-dfc",
+  "version": "1.0.0",
+  "description": "⚙️ monitor and control an array of forgers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "check": "node ./tools/check-forgers.js",
+    "toggle": "node ./tools/toggle-forgers.js"
+  },
+  "author": "Lemii",
+  "license": "MIT",
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "node-fetch": "^2.6.0",
+    "nodemailer": "^6.3.0",
+    "readline-sync": "^1.4.10"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "publicKey": "",
+  "password": "",
+  "apis": [
+    "https://node01.lisk.io",
+    "https://node02.lisk.io",
+    "https://node03.lisk.io",
+    "https://node04.lisk.io",
+    "https://node05.lisk.io",
+    "https://node06.lisk.io",
+    "https://node07.lisk.io",
+    "https://node08.lisk.io"
+  ],
+  "forgers": [],
+  "useExternalForgerList": false,
+  "forgersListPath": "",
+  "forgersListUrl": "",
+  "shuffleInterval": 10,
+  "minimumQueue": 33,
+  "minimumConsensus": 51,
+  "maxRetries": 5,
+  "timeout": 1500,
+  "useMailer": true
+}
