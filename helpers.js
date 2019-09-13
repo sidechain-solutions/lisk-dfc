@@ -22,11 +22,39 @@ const shuffle = a => {
 
 const getForgersList = async () => {
   logger(`Fetching list of forgers..`, "INF");
-  if (config.useExternalForgerList) {
-    if (config.forgersListPath.length) {
-      return require(config.forgersListPath);
-    } else if (config.forgersListUrl.length) {
-      const url = config.forgersListUrl;
+
+  const forgers = [];
+
+  if (!config.useExternalForgerList && config.forgers.length) {
+    logger(`Reading config file.. ${config.forgersListPath}`, "INF");
+    config.forgers.forEach(ip => forgers.push(ip));
+    logger(`${config.forgers.length} forgers in list`, "INF");
+  }
+
+  /* FETCH FILES */
+  if (config.useExternalForgerList && config.forgersListPath.length) {
+    if (typeof config.forgersListPath === "string") {
+      logger(`Reading file: ${config.forgersListPath}`, "INF");
+      require(config.forgersListPath).forEach(ip => forgers.push(ip));
+      return forgers;
+    } else if (typeof config.forgersListPath === "object") {
+      for (let i = 0; i < config.forgersListPath.length; i++) {
+        const path = config.forgersListPath[i];
+        logger(`Reading file: ${path}`, "INF");
+
+        try {
+          require(path).forEach(ip => forgers.push(ip));
+          logger(`${path.length} forgers in list`, "INF");
+        } catch {
+          logger(`Could not read file!`, "ERR");
+        }
+
+        if (i === config.forgersListPath.length - 1) return forgers;
+      }
+    }
+    /* FETCH URLS */
+  } else if (config.useExternalForgerList && config.forgersListUrl.length) {
+    const fetchAndProcessUrl = url => {
       const options = {
         method: "GET",
         cache: "no-cache",
@@ -35,10 +63,29 @@ const getForgersList = async () => {
         }
       };
 
-      return fetch(url, options).then(res => res.json());
+      return fetch(url, options)
+        .then(res => res.json())
+        .then(json => {
+          logger(`${json.length} forgers in list`, "INF");
+          json.forEach(ip => forgers.push(ip));
+        })
+        .catch(err => logger(`Could not read file!`, "ERR"));
+    };
+
+    if (typeof config.forgersListUrl === "string") {
+      logger(`Reading file: ${config.forgersListUrl}`, "INF");
+      await fetchAndProcessUrl(config.forgersListUrl);
+      return forgers;
+    } else if (typeof config.forgersListUrl === "object") {
+      for (let list of config.forgersListUrl) {
+        logger(`Reading file: ${list}`, "INF");
+        await fetchAndProcessUrl(list);
+      }
+      return forgers;
     }
   }
-  return config.forgers;
+
+  return forgers;
 };
 
 const saveState = data => {

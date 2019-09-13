@@ -132,20 +132,19 @@ nano config/config.json
 `password`: The password that you used to encrypt your passphrase  
 `apis`: An array of available APIs that the script will use to get certain data  
 `forgers`: An array of nodes that will be used to forge blocks  
-`useExternalForgerList`: Set this option to 'true' to use an external list of forgers instead of the list in the config.
+`useExternalForgerList`: Set this option to 'true' to use one of more **external** lists of forgers instead of the list in the config, either a local file or a file served statically
 
-> LDFC supports `JSON` files with the following format: `["http://forger1:7000", "http://forger2:7000", "http://forger3:7000"]`. When enabled, either `forgersListPath` OR
+> LDFC supports `JSON` lists in the following format: `["http://forger1:7000", "http://forger2:7000", "http://forger3:7000"]`. When enabled, either `forgersListPath` OR `forgersListUrl` is required
 
-`forgersListUrl` is required  
-`forgersListPath`: The path where the list of forgers is stored  
-`forgersListUrl`: The URL where the list of forgers is stored. Should be hosted statically  
+`forgersListPath`: The path where the list of forgers is stored. Accepted values are a string, or an array of strings  
+`forgersListUrl`: The URL where the list of forgers is stored. Should be hosted statically. Accepted values are a string, or an array of strings  
 `shuffleInterval`: The amount of time (in minutes) between each node shuffle  
 `minimumQueue`: Determines the minimum position in the forging queue to before performe a shuffle  
 `maxRetries`: The amount of attempts before returning an error. Used for re-enabling forging and polling the status of nodes
 `timeout`: The number of miliseconds before a request times out (default: 1500). Lower this number if you are using excessive amount of nodes to avoid the execution time of the script exceeding the cron job interval  
 `useMailer`: Enable or disable mailing functionality. When enabled, LDFC will send warning and alert mails where applicable
 
-Do not forget to add the protocol prefix (`http://` or `https://`) as well as the port number (where applicable) for the APIs and forgers!
+**Do not forget to add the protocol prefix (`http://` or `https://`) as well as the port number (where applicable) for the APIs and forgers in the list(s)!**
 
 ---
 

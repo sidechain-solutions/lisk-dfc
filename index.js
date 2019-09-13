@@ -39,7 +39,7 @@ const main = async () => {
     process.exit();
   }
 
-  logger(`${forgersList.length} forgers found`, "INF");
+  logger(`${forgersList.length} total forgers found`, "INF");
 
   /* Remove trailing forward slashes from all IPs */
   const { apis, forgers } = normalizeAddresses(config.apis, forgersList);
