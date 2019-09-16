@@ -3,7 +3,7 @@
 **Lisk Dynamic Forging Controller (LDFC)** is a controller / monitoring tool with the following features:
 
 - Randomizes the node that your delegate will forge on
-- Ensures that you don't miss a block
+- Ensures that forging is enabled
 - Mitigates the chance of having multiple forging services active at the same time
 - Auto-corrects potential issues
 - Sends alerts via email
@@ -83,7 +83,7 @@ Although it is out of the scope of this project, it is obligitory to highlight t
 Log on to the device that will run the LDFC and download / install it with:
 
 ```
-git clone https://github.com/Lemii/lisk-dfc
+git clone https://github.com/sidechain-solutions/lisk-dfc
 cd lisk-dfc
 npm install
 ```
