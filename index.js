@@ -51,7 +51,7 @@ const main = async () => {
 
   /* Detect if the configured delegate missed a block and act accordingly */
   const missedBlocks = await fetchMissedBlocks(api, config.publicKey);
-  if (config.missedBlocks !== null && missedBlocks > config.missedBlocks) {
+  if (state.missedBlocks !== null && missedBlocks > state.missedBlocks) {
     logger("Your delegate has missed a block!", "ERR");
 
     if (config.useMailer) {
